@@ -1,0 +1,389 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fffde7; /* Light Yellow */
+    font-size: 16px;
+}
+
+header {
+    background-color: #ffb74d; /* Lighter Orange */
+    color: white;
+    text-align: center;
+    padding: 0rem 0;
+    font-size: 1.5rem; /* Header font size */
+}
+
+header img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center align if needed */
+    max-height: 100px; /* Adjust height as needed */
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ffee58; /* Bright Yellow */
+    padding: 1rem;
+    font-size: 1.1rem; /* Navigation font size */
+}
+
+footer {
+    background-color: #66bb6a; /* Green */
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position:static;
+    bottom: 0;
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-img {
+    width: 50px;
+    border-radius: 100%;
+    border: 1px solid #eee;
+}
+
+.sidebar {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background-color: #fff171;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active ~ .main-content {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.sidebar.active {
+    width: 250px;
+}
+
+.sidebar #btn {
+    position: absolute;
+    color: #12171e;
+    top: 2rem;
+    left: 30%;
+    font-size: 2.2rem;
+    line-height: 50px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.sidebar.active #btn {
+    left: 90%;
+}
+
+.sidebar .top .logo {
+    color: #12171e;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.sidebar.active .top .logo {
+    opacity: 1;
+}
+
+.top .logo i {
+    font-size: 28rem;
+    color: #12171e;
+    margin-right: 5px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.user p {
+    color: #12171e;
+    opacity: 1;
+    margin-left: 1rem;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.sidebar p {
+    opacity: 0;
+}
+
+.sidebar.active p {
+    opacity: 1;
+
+}
+
+.sidebar ul li {
+    position: relative;
+    list-style-type: none;
+    height: 50px;
+    width: 90%;
+    margin: 0.8rem auto;
+    line-height: 50px;
+}
+
+.sidebar ul li  a {
+    color: #12171e;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 0.8rem;
+}
+
+.sidebar ul li a:hover {
+    background-color: #33691e;
+    color: #12171e;
+}
+
+.sidebar ul li a i {
+    min-width: 50px;
+    text-align: center;
+    height: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+}
+
+.sidebar .nav-item {
+    opacity: 0;
+}
+
+.sidebar.active .nav-item {
+    opacity: 1;
+}
+
+.sidebar ul li .tooltip {
+    position: absolute;
+    left: 125px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 20;
+    opacity: 0;
+}
+
+.sidebar ul li:hover .tooltip {
+    opacity: 1;
+}
+
+.sidebar.active ul li .tooltip {
+    display: none;
+}
+
+.main-content {
+    position: relative;
+    background-color: #fff9c4;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
+}   
+
+
+
+/* Hero Section Styles */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 5in; /* Set the height to 5 inches */
+    text-align: center;
+    color: white;
+    overflow: hidden; /* Ensures content doesn't overflow the hero section */
+}
+
+.hero-slide {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: fade 0.8s ease-in-out;
+}
+
+.hero-slide.active {
+    display: block;
+    position: relative;
+}
+
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fits the hero section while maintaining aspect ratio */
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    background-color: #66bb6a; /* Green */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.cta-button:hover {
+    background-color: #558b2f; /* Darker Green */
+}
+
+/* Hero Controls Styles */
+.hero-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.hero-controls button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.hero-controls button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.upload-section {
+    margin-top: 1rem;
+    text-align: center;
+
+}
+
+
+
+/* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* On top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%; /* Adjust width as necessary */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px; /* Limit the modal width */
+    text-align: center;
+    animation: slideDown 0.4s ease-out; /* Slide down effect */
+}
+
+/* Animation for modal */
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Close Button */
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Image Preview */
+#image-preview {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain; /* Adjust image fitting */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Upload Button */
+input[type="submit"] {
+    background-color: #f28b2b; /* Orange color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #d77a1c; /* Darker orange on hover */
+}
+
+.remove-button {
+    background-color: #ff5c5c !important; /* Red color */
+    color: white !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 16px !important; /* Adjust font size */
+}
+
+.remove-button:hover {
+    background-color: #d9534f !important; /* Darker red on hover */
+}
