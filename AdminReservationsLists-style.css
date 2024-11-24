@@ -85,7 +85,7 @@ footer {
 }
 
 .sidebar.active #btn {
-    left: 90%;
+    left: 85%;
 }
 
 .sidebar .top .logo {
@@ -185,7 +185,7 @@ footer {
 }
 
 .sidebar ul li:hover .tooltip {
-    opacity: 1;
+    opacity: 0;
 }
 
 .sidebar.active ul li .tooltip {
@@ -271,7 +271,7 @@ tfoot td {
     cursor: pointer;
     width: 100%;
     table-layout: fixed; /* Ensures each column aligns across rows */
-
+    overflow-x: auto;
 }
 
 .Abtn {
@@ -415,4 +415,75 @@ input, textarea {
     color: white;
     text-decoration: none;
     border-radius: 5px;
+}
+
+
+/* Hide the button on larger screens */
+.svg-hamburger {
+    display: none;
+}
+  
+.mobile-nav {
+    display: none; 
+}
+/* Media Query for Sidebar on Mobile */
+@media screen and (max-width: 768px){
+    .sidebar {
+        display: none;
+    }
+
+        /*Navigation*/
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+    }
+      /* Initial hidden state for nav */
+    .mobile-nav {
+        display: none; 
+        flex-direction: column; 
+        font-size: 1rem;
+        background-color: #ffee58;
+        padding: 1rem;
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    nav a {
+        padding: 1rem;
+        color: #12171e;
+        text-decoration: none;
+    }
+
+    .svg-hamburger {
+        display: block;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .svg-hamburger:hover{
+        cursor: pointer;
+    }
+
+    .main-content {
+        min-height: 100vh;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+  
+    
+    /*Table*/
+    .table-container {
+        color: green;
+        background: none;
+        cursor: pointer;
+        width: 100%;
+        overflow-x: auto;
+        table-layout: fixed; /* Ensures each column aligns across rows */
+    }
 }
