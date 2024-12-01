@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- BOXICONS -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="Login-style.css">
+    <link rel="stylesheet" href="Login-style.css?ver=<?php echo time();?>">
     <title>Ludiflex | Login & Registration</title>
 </head>
 <body>
@@ -19,7 +19,6 @@
        <!----------------------------- Form box ----------------------------------->    
        <div class="form-box">
            <!------------------- login form --------------------------> 
-           <form action="function.php" method="POST">
                <div class="login-container" id="login">
                    <div class="top">
                        <span>Don't have an account?</span>
@@ -34,7 +33,7 @@
                        <i class="bx bx-lock-alt"></i>
                    </div>
                    <div class="input-box">
-                       <input type="submit" class="submit" value="Sign In">
+                       <button class="submit" onclick="loginUser()">Sign In</button>
                    </div>
 
                    <!-- Show password checkbox -->
@@ -45,11 +44,10 @@
                        </div>
                    </div>
                </div>
-           </form>
            <!------------------- registration form --------------------------> 
        </div>
    </div>   
 
-   <script src="Login-script.js"></script>
+   <script src="Login-script.js?ver=<?php echo time();?>"></script>
 </body>
 </html>

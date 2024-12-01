@@ -10,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $address = $_POST['address'];
     $status = $_POST['status'];
+    $position = $_POST['position'];
 
-    $sql = "INSERT INTO admin_accounts (username, password, name, contact_number, email, address, status) 
-            VALUES ('$username', '$password', '$name', '$contact', '$email', '$address', '$status')";
+    $sql = "INSERT INTO admin_accounts (username, password, name, contact_number, email, address, status, Position) 
+            VALUES ('$username', '$password', '$name', '$contact', '$email', '$address', '$status', '$position')";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(["success" => true, "message" => "Staff account added successfully"]);
@@ -44,8 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $email = $_PUT['email'];
     $address = $_PUT['address'];
     $status = $_PUT['status'];
+    $position = $_PUT['position'];
 
-    $sql = "UPDATE admin_accounts SET username='$username', password='$password', name='$name', contact_number='$contact', email='$email', address='$address', status='$status' 
+    $sql = "UPDATE admin_accounts SET username='$username', password='$password', name='$name', contact_number='$contact', email='$email', address='$address', status='$status', position='$position'
             WHERE id='$id'";
 
     if ($conn->query($sql) === TRUE) {

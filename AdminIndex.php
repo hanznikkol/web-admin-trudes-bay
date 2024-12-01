@@ -71,7 +71,7 @@ $conn->close();
         <a href="AdminActivities.php"><i class='bx bx-swim'></i> <span class="nav-item">Activities</span></a>
         <a href="AdminAbout.php"><i class='bx bxs-news'></i> <span class="nav-item">About</span></a>
         <a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a>
-        <a href="#"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
+        <a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
     </nav>
     <!--Show only in Desktop-->
     <div class="sidebar">
@@ -94,13 +94,13 @@ $conn->close();
             <li><a href="AdminActivities.php"><i class='bx bx-swim'></i> <span class="nav-item">Activities</span></a></li>
             <li><a href="AdminAbout.php"><i class='bx bxs-news'></i> <span class="nav-item">About</span></a></li>
             <li><a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a></li>
-            <li><a href="#"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a></li>
+            <li><a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="container">
-            <h1>Homepage</h1>
+            <h1 id="welcome"></h1>
         </div>
 
         
@@ -147,8 +147,8 @@ $conn->close();
         </div>
 
     </div>    
-    <script src="AdminIndex-scripts.js"></script>
-
+    <script src="AdminIndex-scripts.js?ver=<?php echo time();?>"></script>
+    <script src="sessionchecker.js?ver=<?php echo time();?>"></script>
     <footer>
         <p>&copy; Trudes Bay Beach Resort</p>
     </footer>

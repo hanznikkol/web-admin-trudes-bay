@@ -5,8 +5,6 @@ btn.onclick = function () {
     sidebar.classList.toggle('active');
 };
 
-
-
 let slideIndex = 0;
 
 // Show slides in the hero section
@@ -31,6 +29,14 @@ function showSlides(n) {
 function changeSlide(n) {
     showSlides(slideIndex + n);
 }
+
+document.addEventListener("DOMContentLoaded", function () { 
+    var session = sessionStorage.getItem('admintrudes_session')
+    if(session){
+        var user = JSON.parse(session)
+        document.getElementById("welcome").innerText = `Hello ${user.name}!`;
+    }
+})
 
 // Function to preview image and open modal when an image is selected
 function imageSelected(event) {
@@ -59,9 +65,13 @@ function closeModal() {
 }
 
 // Reopen the modal when a new image is selected
-document.getElementById("image-input").addEventListener("change", function(event) {
-    imageSelected(event);
-});
+var imageInput = document.getElementById("image-input")
+
+if(imageInput != null) { 
+    imageInput.addEventListener("change", function(event) {
+        imageSelected(event);
+    });
+}
 
 // Handle modal close events
 window.addEventListener("click", function(event) {

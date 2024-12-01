@@ -32,7 +32,7 @@
         <a href="AdminActivities.php"><i class='bx bx-swim'></i> <span class="nav-item">Activities</span></a>
         <a href="AdminAbout.php"><i class='bx bxs-news'></i> <span class="nav-item">About</span></a>
         <a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a>
-        <a href="#"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
+        <a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
     </nav>
     <!--Show only in Desktop-->
     <div class="sidebar">
@@ -56,7 +56,7 @@
             <li><a href="AdminActivities.php"><i class='bx bx-swim'></i> <span class="nav-item">Activities</span></a></li>
             <li><a href="AdminAbout.php"><i class='bx bxs-news'></i> <span class="nav-item">About</span></a></li>
             <li><a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a></li>
-            <li><a href="#"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a></li>
+            <li><a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a></li>
         </ul>
     </div>
 
@@ -93,9 +93,14 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
                     <label for="status">Status:</label>
-                    <select id="status" name="status" required>
+                    <select id="status" name="status">
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
+                    </select>
+                    <label for="position">Position:</label>
+                    <select id="position" name="position">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="STAFF">STAFF</option>
                     </select>
                     <div class="button-container">
                         <button type="submit">Add Staff</button>
@@ -109,7 +114,7 @@
         <div id="editReservationModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close-button">&times;</span> <!-- New close button -->
-                <h2>Edit Reservation</h2>
+                <h2>Edit Staff</h2>
                 <form id="editReservationForm">
                     <input type="hidden" id="editReservationId">
                     <label for="editName">Name:</label>
@@ -124,11 +129,16 @@
                     <input type="text" id="editUsername">
                     <label for="editPassword">Password:</label>
                     <input type="text" id="editPassword">
-                    <label for="editStatus">Status:</label>
                     <!-- fetch here -->
-                    <select id="editStatus">
-                        <option value="Pending">Active</option>
-                        <option value="Confirmed">Inactive</option>
+                    <label for="editStatus">Status:</label>
+                    <select id="editStatus" name="status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                    <label for="editPosition">Position:</label>
+                    <select id="editPosition">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="STAFF">STAFF</option>
                     </select>
                     <div class="button-container">
                         <button type="submit">Save</button>
@@ -140,8 +150,8 @@
              
     </div>
 
-    <script src="AdminAccounts-scripts.js"></script>
-
+    <script src="AdminAccounts-scripts.js?ver=<?php echo time();?>"></script>
+    <script src="sessionchecker.js?ver=<?php echo time();?>"></script>
     <footer>
         <p>&copy; Trudes Bay Beach Resort</p>
     </footer>

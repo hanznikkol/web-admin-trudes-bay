@@ -51,7 +51,7 @@ $result = $conn->query($sql);
         <a href="AdminActivities.php"><i class='bx bx-swim'></i> <span class="nav-item">Activities</span></a>
         <a href="AdminAbout.php"><i class='bx bxs-news'></i> <span class="nav-item">About</span></a>
         <a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a>
-        <a href="#"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
+        <a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
     </nav>
     <div class="sidebar">
         <div class="top">
@@ -124,7 +124,7 @@ $result = $conn->query($sql);
 
 
             <li>
-                <a href="#">
+                <a onclick="logout()">
                     <i class="bx bxs-log-out"></i>
                     <span class="nav-item">Logout</span>
                 </a>
@@ -165,8 +165,8 @@ $result = $conn->query($sql);
 
     </div>
 
-    <script src="AdminFaq-script.js"></script>
-
+    <script src="AdminFaq-script.js?ver=<?php echo time();?>"></script>
+    <script src="sessionchecker.js?ver=<?php echo time();?>"></script>
     <footer>
         <p>&copy; Trudes Bay Beach Resort</p>
     </footer>

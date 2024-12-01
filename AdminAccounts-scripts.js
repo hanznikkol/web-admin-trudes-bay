@@ -5,7 +5,22 @@ btn.onclick = function () {
     sidebar.classList.toggle('active');
 };
 
-
+document.addEventListener("DOMContentLoaded", function () { 
+    var session = sessionStorage.getItem('admintrudes_session')
+    if(session){
+        var user = JSON.parse(session)
+        if(user.position == 'STAFF') {
+            alert('Unauthorized Access')
+            window.location.href = 'AdminIndex.php'
+        }
+        if(user.position == 'ADMIN') {
+            var selects = document.querySelectorAll('#position, #editPosition');
+            selects.forEach(select => {
+                select.innerHTML = "<option>STAFF</option>"
+            })
+        }
+    }
+})
 
 // Fetch all reservations from the database on page load
 window.onload = function() {
@@ -14,6 +29,11 @@ window.onload = function() {
 
 // Fetch all reservations from the database
 function fetchAllReservations() {
+    var session = sessionStorage.getItem('admintrudes_session')
+    let user = {}
+    if(session)
+        user = JSON.parse(session)
+
     fetch(`Adminfunction.php`) // No need for cottage_no now
         .then(response => response.json())
         .then(data => {
@@ -22,6 +42,7 @@ function fetchAllReservations() {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Position</th>
                             <th>Contact Number</th>
                             <th>Email</th>
                             <th>Address</th>
@@ -33,20 +54,25 @@ function fetchAllReservations() {
                     </thead>
                     <tbody>`;
 
-            data.forEach(reservation => {
+            data.forEach(account => {
+                if(user.position == 'ADMIN' && account.Position == 'SUPERUSER') return
                 tableHtml += `
-                    <tr data-id="${reservation.id}">
-                        <td>${reservation.name || 'N/A'}</td>
-                        <td>${reservation.contact_number || 'N/A'}</td>
-                        <td>${reservation.email || 'N/A'}</td>
-                        <td>${reservation.address || 'N/A'}</td>
-                        <td>${reservation.username || 'N/A'}</td>
-                        <td>${reservation.password || 'N/A'}</td>
-                        <td>${reservation.status || 'N/A'}</td>
+                    <tr data-id="${account.id}">
+                        <td>${account.name || 'N/A'}</td>
+                        <td>${account.Position}</td>
+                        <td>${account.contact_number || 'N/A'}</td>
+                        <td>${account.email || 'N/A'}</td>
+                        <td>${account.address || 'N/A'}</td>
+                        <td>${account.username || 'N/A'}</td>
+                        <td>${(user.position == 'SUPERUSER') || (user.position == 'ADMIN' && account.Position == 'STAFF') ? account.password : '...' }</td>
+                        <td>${account.status || 'N/A'}</td>
                         <td>
-                            <button class="edit-button" onclick="openEditForm(${reservation.id})">Edit</button>
-                            <button class="remove-button" onclick="removeReservation(${reservation.id})">Remove</button>
-                        </td>
+                        ${(user.position == 'SUPERUSER' && account.id != user.id) || 
+                        (user.position == 'ADMIN' && account.Position == 'STAFF') 
+                            ? `<button class="edit-button" onclick="openEditForm(${account.id})">Edit</button>
+                            <button class="remove-button" onclick="removeReservation(${account.id})">Remove</button>`
+                            : '' }
+                        </td> 
                     </tr>`;
             });
 
@@ -60,41 +86,18 @@ function fetchAllReservations() {
         .catch(error => console.error("Error fetching reservations:", error));
 }
 
-// Function to open the edit form
-function openEditForm(reservationId) {
-    // Fetch the reservation data for the selected ID and populate the form
-    fetch(`Adminfunction.php?reservation_id=${reservationId}`)
-        .then(response => response.json())
-        .then(data => {
-            // Populate the form fields with the fetched data
-            document.getElementById('editReservationId').value = data.id;
-            document.getElementById('editName').value = data.name;
-            document.getElementById('editContact').value = data.contact_number;
-            document.getElementById('editEmail').value = data.email;
-            document.getElementById('editAddress').value = data.address;
-            document.getElementById('editUsername').value = data.username;
-            document.getElementById('editPassword').value = data.password;
-            document.getElementById('editStatus').value = data.status;
-           
-             // Show the modal
-             openEditModal(); // Change this line
-
-             
-        })
-        .catch(error => console.error("Error fetching Admins data:", error));
-}
-
 // Function to update the reservation row in the table
-function updateReservationRow(reservationId, name, contact, email, address, username, password, status) {
+function updateReservationRow(reservationId, name, contact, email, address, username, password, status, position) {
     const reservationRow = document.querySelector(`tr[data-id='${reservationId}']`);
     if (reservationRow) {
         reservationRow.cells[0].innerText = name; // Name
-        reservationRow.cells[1].innerText = contact; // Contact Number
-        reservationRow.cells[2].innerText = email; // Email
-        reservationRow.cells[3].innerText = address; // Address
-        reservationRow.cells[4].innerText = username; // Username
-        reservationRow.cells[5].innerText = password; // Password
-        reservationRow.cells[6].innerText = status; // Status
+        reservationRow.cells[1].innerText = position;
+        reservationRow.cells[2].innerText = contact; // Contact Number
+        reservationRow.cells[3].innerText = email; // Email
+        reservationRow.cells[4].innerText = address; // Address
+        reservationRow.cells[5].innerText = username; // Username
+        reservationRow.cells[6].innerText = password; // Password
+        reservationRow.cells[7].innerText = status;
     }
 }
 
@@ -131,7 +134,7 @@ function openAddForm() {
         .then(data => {
             if (data.success) {
                 alert("Staff added successfully");
-                fetchReservations(cottage_no); // Refresh the reservations table
+                fetchAllReservations(); // Refresh the reservations table
                 modal.style.display = "none"; // Close the modal
                 this.reset(); // Reset the form
             } else {
@@ -173,7 +176,7 @@ function openEditForm(reservationId) {
     const reservationRow = document.querySelector(`tr[data-id='${reservationId}']`);
     const reservationData = Array.from(reservationRow.cells).map(cell => cell.innerText);
 
-    const [name, contact, email, address, username, password, status] = reservationData;
+    const [name, position, contact, email, address, username, password, status] = reservationData;
     
     // Set the fields in the modal form
     document.getElementById('editName').value = name;
@@ -182,7 +185,8 @@ function openEditForm(reservationId) {
     document.getElementById('editAddress').value = address;
     document.getElementById('editUsername').value = username;
     document.getElementById('editPassword').value = password;
-    document.getElementById('editStatus').value = status == 'Active' ? 'Pending' : 'Confirmed';
+    document.getElementById('editStatus').value = status;
+    document.getElementById('editPosition').value = position;
     document.getElementById('editReservationId').value = reservationId;
 
     // Show the edit modal
@@ -202,9 +206,10 @@ document.getElementById('editReservationForm').addEventListener('submit', functi
     const username = document.getElementById('editUsername').value;
     const password = document.getElementById('editPassword').value;
     const status = document.getElementById('editStatus').value; 
+    const position = document.getElementById('editPosition').value; 
 
     // Prepare the data as a query string
-    const data = `id=${reservationId}&name=${name}&contact_number=${contact}&email=${email}&address=${address}&username=${username}&password=${password}&status=${status}`;
+    const data = `id=${reservationId}&name=${name}&contact_number=${contact}&email=${email}&address=${address}&username=${username}&password=${password}&status=${status}&position=${position}`;
 
 
     // Create an AJAX request
@@ -219,7 +224,7 @@ document.getElementById('editReservationForm').addEventListener('submit', functi
             if (response.success) {
                 alert(response.message);
                 // Update the reservation row in the table
-                updateReservationRow(reservationId, name, contact, email, address, username, password);
+                updateReservationRow(reservationId, name, contact, email, address, username, password, status, position);
                 closeEditModal(); // Assuming you have a function to close the modal
             } else {
                 alert(response.message);
