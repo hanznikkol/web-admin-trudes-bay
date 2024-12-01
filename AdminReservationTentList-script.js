@@ -14,20 +14,9 @@ function formatTimeTo12Hour(time) {
     return `${hours}:${minutes} ${ampm}`;
 }
 
-document.getElementById('cottage-select').addEventListener('change', function () {
-    const selectedCottage = this.value;
-    const cottageList = document.getElementById('cottage-list');
-
-    cottageList.innerHTML = ''; // Clear the list before loading new data
-
-    // Fetch reservations for the selected cottage or for all cottages if no specific cottage is selected
-    fetchReservations(selectedCottage);
-});
-
 // Trigger fetching all reservations on page load if no cottage is selected
 document.addEventListener('DOMContentLoaded', function () {
-    const selectedCottage = document.getElementById('cottage-select').value;
-    fetchReservations(selectedCottage);
+    fetchReservations('');
 });
 
 // Function to fetch reservations for selected cottage or all cottages
@@ -52,6 +41,7 @@ function fetchReservations(tentquantity) {
                             <th>Firstname</th>
                             <th>Middlename</th>
                             <th>Lastname</th>
+                            <th>Reservation</th>
                             <th>Contact Number</th>
                             <th>Email</th>
                             <th>Address</th>
@@ -78,6 +68,7 @@ function fetchReservations(tentquantity) {
                             <td>${reservation.first_name || 'N/A'}</td>
                             <td>${reservation.middle_name || 'N/A'}</td>
                             <td>${reservation.last_name || 'N/A'}</td>
+                            <td>${reservation.concatenated_values}</td>
                             <td>${reservation.contact_number || 'N/A'}</td>
                             <td>${reservation.email || 'N/A'}</td>
                             <td>${reservation.address || 'N/A'}</td>
@@ -89,7 +80,7 @@ function fetchReservations(tentquantity) {
                             <td>${reservation.guests || 'N/A'}</td>
                             <td>${reservation.reference || 'N/A'}</td>
                             <td>
-                                <button class="edit-button" onclick="openEditForm(${reservation.id})">Edit</button>
+                            
                                 <button class="remove-button" onclick="removeReservation(${reservation.id}, ${tentquantity})">Remove</button>
                             </td>
                         </tr>`;
@@ -105,7 +96,7 @@ function fetchReservations(tentquantity) {
             tableHtml += `
                     </tbody>
                 </table>
-                <button class="Abtn add-button" onclick="openAddForm(${tentquantity || 'null'})">Add List</button>`;
+                <button class="Abtn add-button" onclick="openReservationForm()">Add Reservation</button>`;
 
             document.getElementById('cottage-list').innerHTML = tableHtml;
         })
@@ -223,7 +214,7 @@ function openEditForm(reservationId) {
 // Convert 12-hour time format to 24-hour format
 function convertTo24Hour(time) {
     let [hour, minute] = time.split(":");
-    let [time, ampm] = time.split(" ");
+    let [t, ampm] = time.split(" ");
     if (ampm.toLowerCase() === "pm" && hour !== "12") {
         hour = parseInt(hour) + 12;
     } else if (ampm.toLowerCase() === "am" && hour === "12") {

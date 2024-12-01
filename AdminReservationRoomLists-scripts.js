@@ -39,7 +39,7 @@ function fetchReservations(selectroom) {
     .then(data => {
         console.log("Data received:", data);  // Log the full response data for inspection
 
-        const headingText = selectroom ? `Room ${selectroom}` : 'All Rooms';
+        const headingText = selectroom ? selectroom : 'All Rooms';
         let tableHtml = `
             <h3>${headingText}</h3>
             <table>
@@ -48,6 +48,7 @@ function fetchReservations(selectroom) {
                         <th>Firstname</th>
                         <th>Middlename</th>
                         <th>Lastname</th>
+                        <th>Reservation</th>
                         <th>Contact Number</th>
                         <th>Email</th>
                         <th>Address</th>
@@ -73,6 +74,7 @@ function fetchReservations(selectroom) {
                         <td>${reservation.first_name || 'N/A'}</td>
                         <td>${reservation.middle_name || 'N/A'}</td>
                         <td>${reservation.last_name || 'N/A'}</td>
+                        <td>${reservation.concatenated_values}</td>
                         <td>${reservation.contact_number || 'N/A'}</td>
                         <td>${reservation.email || 'N/A'}</td>
                         <td>${reservation.address || 'N/A'}</td>
@@ -84,7 +86,6 @@ function fetchReservations(selectroom) {
                         <td>${reservation.guests || 'N/A'}</td>
                         <td>${reservation.reference || 'N/A'}</td>
                         <td>
-                            <button class="edit-button" onclick="openEditForm(${reservation.id})">Edit</button>
                             <button class="remove-button" onclick="removeReservation(${reservation.id}, ${selectroom})">Remove</button>
                         </td>
                     </tr>`;
@@ -99,7 +100,7 @@ function fetchReservations(selectroom) {
         tableHtml += `
                 </tbody>
             </table>
-            <button class="Abtn add-button" onclick="openAddForm(${selectroom || 'null'})">Add List</button>`;
+            <button class="Abtn add-button" onclick="openReservationForm()">Add Reservation</button>`;
 
         document.getElementById('cottage-list').innerHTML = tableHtml;
     })

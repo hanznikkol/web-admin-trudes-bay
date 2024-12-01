@@ -39,20 +39,13 @@ ini_set('display_errors', 1);
 // e.g., $conn = new mysqli("hostname", "username", "password", "database");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Sanitize the input 'tentquantity'
-    if (isset($_GET['tentquantity']) && !empty($_GET['tentquantity'])) {
-        $tentquantity = $conn->real_escape_string($_GET['tentquantity']);
-        
-        // SQL query to fetch reservations for the selected tent_quantity
-        $sql = "SELECT * FROM reservations WHERE tent_quantity = '$tentquantity' AND tent_quantity IS NOT NULL";
-    } else {
-        // SQL query to fetch all reservations that have a non-null 'tent_quantity'
-        $sql = "SELECT * FROM reservations WHERE tent_quantity IS NOT NULL";
-    }
+    $reservationType = 'Tent';
 
-    // Execute the SQL query
-    $result = $conn->query($sql);
-
+    // If no room is selected, fetch all reservations
+    $stmt = $conn->prepare("SELECT *, GROUP_CONCAT(CASE WHEN rt.reservationType = 'Tent' THEN CONCAT(rt.value, ' Tents') ELSE rt.value END SEPARATOR ', ') AS concatenated_values FROM reservations r INNER JOIN reservation_types rt ON rt.reservationID = r.id GROUP BY r.id;");
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
     // Check if the query was successful
     if (!$result) {
         echo json_encode(["error" => "Query failed: " . $conn->error]);
@@ -61,14 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Check if any records were found
     if ($result->num_rows > 0) {
-        $cottageres = [];
+        $tentres = [];
 
         while ($row = $result->fetch_assoc()) {
-            $cottageres[] = $row;
+            // Check if 'room 1' exists in the concatenated_values column
+            if (strpos($row['concatenated_values'], $reservationType) !== false) {
+                $tentres[] = $row;
+            }
         }
 
+
         // Output the result as JSON
-        echo json_encode($cottageres);
+        echo json_encode($tentres);
     } else {
         echo json_encode(["error" => "No reservations found"]);
     }

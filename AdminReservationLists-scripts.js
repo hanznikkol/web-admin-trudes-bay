@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchReservations(selectcottage) {
     // If no cottage is selected, fetch all reservations
     const queryParam = selectcottage ? `?selectcottage=${selectcottage}` : '';
-
+    console.log(selectcottage);
     fetch(`AdminReserveCottage.php${queryParam}`)
     .then(response => response.json())
     .then(data => {
         console.log("Data received:", data);  // Log the full response data for inspection
 
         // Determine the heading text based on the selection
-        const headingText = selectcottage ? `Cottage ${selectcottage}` : 'All Cottages';
+        const headingText = selectcottage ? selectcottage : 'All Cottages';
 
         // Start building the table HTML regardless of the data
         let tableHtml = `
@@ -53,6 +53,7 @@ function fetchReservations(selectcottage) {
                         <th>Firstname</th>
                         <th>Middlename</th>
                         <th>Lastname</th>
+                        <th>Reservation</th>
                         <th>Contact Number</th>
                         <th>Email</th>
                         <th>Address</th>
@@ -79,6 +80,7 @@ function fetchReservations(selectcottage) {
                         <td>${reservation.first_name || 'N/A'}</td>
                         <td>${reservation.middle_name || 'N/A'}</td>
                         <td>${reservation.last_name || 'N/A'}</td>
+                        <td>${reservation.concatenated_values}</td>
                         <td>${reservation.contact_number || 'N/A'}</td>
                         <td>${reservation.email || 'N/A'}</td>
                         <td>${reservation.address || 'N/A'}</td>
@@ -90,7 +92,6 @@ function fetchReservations(selectcottage) {
                         <td>${reservation.guests || 'N/A'}</td>
                         <td>${reservation.reference || 'N/A'}</td>
                         <td>
-                            <button class="edit-button" onclick="openEditForm(${reservation.id})">Edit</button>
                             <button class="remove-button" onclick="removeReservation(${reservation.id}, ${selectcottage})">Remove</button>
                         </td>
                     </tr>`;
@@ -107,7 +108,7 @@ function fetchReservations(selectcottage) {
         tableHtml += `
                 </tbody>
             </table>
-            <button class="Abtn add-button" onclick="openAddForm(${selectcottage || 'null'})">Add List</button>`;
+            <button class="Abtn add-button" onclick="openReservationForm()">Add Reservation</button>`;
 
         // Insert the table into the cottage list container
         document.getElementById('cottage-list').innerHTML = tableHtml;

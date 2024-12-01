@@ -131,12 +131,12 @@
                 <div>
                 <select id="cottage-select" class="select">
                     <option value="">All Cottage</option> <!-- Display all the cottage when selected  -->
-                    <option value="1">Cottage 1</option>
-                    <option value="2">Cottage 2</option>
-                    <option value="3">Cottage 3</option>
-                    <option value="4">Cottage 4</option>
-                    <option value="5">Cottage 5</option>
-                    <option value="6">Cottage 6</option>
+                    <option value="Cottage 1">Cottage 1</option>
+                    <option value="Cottage 2">Cottage 2</option>
+                    <option value="Cottage 3">Cottage 3</option>
+                    <option value="Cottage 4">Cottage 4</option>
+                    <option value="Cottage 5">Cottage 5</option>
+                    <option value="Cottage 6">Cottage 6</option>
                 </select>
                 </div>
             </div>
@@ -191,12 +191,12 @@
                     <label for="selectcottage">Select Cottage:</label>
                     <select id="selectcottage" name="selectcottage" required>
                         <option value="">Select a cottage</option>
-                        <option value="1">Cottage 1</option>
-                        <option value="2">Cottage 2</option>
-                        <option value="3">Cottage 3</option>
-                        <option value="4">Cottage 4</option>
-                        <option value="5">Cottage 5</option>
-                        <option value="6">Cottage 6</option>
+                        <option value="Cottage 1">Cottage 1</option>
+                        <option value="Cottage 2">Cottage 2</option>
+                        <option value="Cottage 3">Cottage 3</option>
+                        <option value="Cottage 4">Cottage 4</option>
+                        <option value="Cottage 5">Cottage 5</option>
+                        <option value="Cottage 6">Cottage 6</option>
                     </select>
                     
                     <label for="reference">Reference:</label>
@@ -243,12 +243,12 @@
 
                     <label for="editSelectCottage">Select Cottage:</label>
                     <select id="editSelectCottage">
-                        <option value="1">Cottage 1</option>
-                        <option value="2">Cottage 2</option>
-                        <option value="3">Cottage 3</option>
-                        <option value="4">Cottage 4</option>
-                        <option value="5">Cottage 5</option>
-                        <option value="6">Cottage 6</option>
+                        <option value="Cottage 1">Cottage 1</option>
+                        <option value="Cottage 2">Cottage 2</option>
+                        <option value="Cottage 3">Cottage 3</option>
+                        <option value="Cottage 4">Cottage 4</option>
+                        <option value="Cottage 5">Cottage 5</option>
+                        <option value="Cottage 6">Cottage 6</option>
                     </select>
 
                     <label for="editGuests">Number of Guests:</label>

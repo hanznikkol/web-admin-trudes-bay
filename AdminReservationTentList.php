@@ -174,17 +174,6 @@
                     
                     <label for="guests">Number of Guests:</label>
                     <input type="number" id="guests" name="guests" required>
-
-                    <label for="selectcottage">Select Cottage:</label>
-                    <select id="selectcottage" name="selectcottage" required>
-                        <option value="">Select a cottage</option>
-                        <option value="1">Cottage 1</option>
-                        <option value="2">Cottage 2</option>
-                        <option value="3">Cottage 3</option>
-                        <option value="4">Cottage 4</option>
-                        <option value="5">Cottage 5</option>
-                        <option value="6">Cottage 6</option>
-                    </select>
                     
                     <label for="reference">Reference:</label>
                     <input type="number" id="reference" name="reference" required>
@@ -225,17 +214,6 @@
                     <input type="time" id="editCheckin">
                     <label for="editCheckout">Check-out:</label>
                     <input type="time" id="editCheckout">
-
-                    <label for="editSelectCottage">Select Cottage:</label>
-                    <select id="editSelectCottage">
-                        <option value="1">Cottage 1</option>
-                        <option value="2">Cottage 2</option>
-                        <option value="3">Cottage 3</option>
-                        <option value="4">Cottage 4</option>
-                        <option value="5">Cottage 5</option>
-                        <option value="6">Cottage 6</option>
-                    </select>
-
                     <label for="editGuests">Number of Guests:</label>
                     <input type="number" id="editGuests">
                     <label for="editReference">Reference:</label>

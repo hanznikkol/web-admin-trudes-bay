@@ -37,20 +37,14 @@ ini_set('display_errors', 1);
 
 // Check if the request is GET
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Sanitize the input 'selectcottage'
-    if (isset($_GET['selectcottage']) && !empty($_GET['selectcottage'])) {
-        $selectcottage = $conn->real_escape_string($_GET['selectcottage']);
-        
-        // SQL query to fetch reservations for the selected cottage
-        $sql = "SELECT * FROM reservations WHERE select_cottage = '$selectcottage'";
-    } else {
-        // If no cottage is selected, fetch all reservations
-        $sql = "SELECT * FROM reservations";
-    }
+    $reservationType = 'Cottage';
+    $selectcottage = $_GET['selectcottage'] ?? '';
 
-    // Execute the SQL query
-    $result = $conn->query($sql);
-
+    // If no cottage is selected, fetch all reservations
+    $stmt = $conn->prepare("SELECT *, GROUP_CONCAT(CASE WHEN rt.reservationType = 'Tent' THEN CONCAT(rt.value, ' Tents') ELSE rt.value END SEPARATOR ', ') AS concatenated_values FROM reservations r INNER JOIN reservation_types rt ON rt.reservationID = r.id GROUP BY r.id;");
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
     // Check if the query was successful
     if (!$result) {
         echo json_encode(["error" => "Query failed: " . $conn->error]);
@@ -62,8 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $cottageres = [];
 
         while ($row = $result->fetch_assoc()) {
-            $cottageres[] = $row;
+            // Check if 'Cottage 1' exists in the concatenated_values column
+            if (strpos($row['concatenated_values'], $reservationType) !== false && strpos($row['concatenated_values'], $selectcottage) !== false) {
+                $cottageres[] = $row;
+            }
         }
+
 
         // Output the result as JSON
         echo json_encode($cottageres);

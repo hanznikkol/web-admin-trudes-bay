@@ -24,55 +24,72 @@ function fetchAllReservations() {
     fetch(`AdminEventfunction.php`) // No need for cottage_no now
         .then(response => response.json())
         .then(data => {
+            console.log('received data', data)
             let tableHtml = `
                 <h3>Event Hall Reservation List</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Firstname</th>
+                            <th>Middlename</th>
+                            <th>Lastname</th>
+                            <th>Reservation</th>
                             <th>Contact Number</th>
                             <th>Email</th>
                             <th>Address</th>
                             <th>Note</th>
-                            <th>Date</th>
+                            <th>Check-in Date</th>
+                            <th>Check-out Date</th>
                             <th>Check-in</th>
                             <th>Check-out</th>
-                            <th>Tent Quantity</th>
                             <th>Number of Guests</th>
+                            <th>Payment Reference</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>`;
 
-            data.forEach(reservation => {
-                const checkinFormatted = formatTimeTo12Hour(reservation.Check_in);
-                const checkoutFormatted = formatTimeTo12Hour(reservation.Check_out);
-                
+                    // Check if data is an array and contains entries
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(reservation => {
+                    const checkinFormatted = formatTimeTo12Hour(reservation.check_in);
+                    const checkoutFormatted = formatTimeTo12Hour(reservation.check_out);
+                    
+                    tableHtml += `
+                        <tr data-id="${reservation.id}">
+                            <td>${reservation.first_name || 'N/A'}</td>
+                            <td>${reservation.middle_name || 'N/A'}</td>
+                            <td>${reservation.last_name || 'N/A'}</td>
+                            <td>${reservation.concatenated_values}</td>
+                            <td>${reservation.contact_number || 'N/A'}</td>
+                            <td>${reservation.email || 'N/A'}</td>
+                            <td>${reservation.address || 'N/A'}</td>
+                            <td>${reservation.note || 'N/A'}</td>
+                            <td>${reservation.check_in_date || 'N/A'}</td>
+                            <td>${reservation.check_out_date || 'N/A'}</td>
+                            <td>${checkinFormatted || 'N/A'}</td>
+                            <td>${checkoutFormatted || 'N/A'}</td>
+                            <td>${reservation.guests || 'N/A'}</td>
+                            <td>${reservation.reference || 'N/A'}</td>
+                            <td>
+                            
+                                <button class="remove-button" onclick="removeReservation(${reservation.id}, ${tentquantity})">Remove</button>
+                            </td>
+                        </tr>`;
+                });
+            } else {
+                // If no reservations are found, display a message within the table
                 tableHtml += `
-                    <tr data-id="${reservation.id}">
-                        <td>${reservation.Name || 'N/A'}</td>
-                        <td>${reservation.Contact_Number || 'N/A'}</td>
-                        <td>${reservation.Email || 'N/A'}</td>
-                        <td>${reservation.Address || 'N/A'}</td>
-                        <td>${reservation.Note || 'N/A'}</td>
-                        <td>${reservation.Date || 'N/A'}</td>
-                        <td>${checkinFormatted || 'N/A'}</td>
-                        <td>${checkoutFormatted || 'N/A'}</td>
-                        <td>${reservation.Event_quantity || 'N/A'}</td>
-                        <td>${reservation.Number_of_Guests || 'N/A'}</td>
-                        <td>
-                            <button class="edit-button" onclick="openEditForm(${reservation.id})">Edit</button>
-                            <button class="remove-button" onclick="removeReservation(${reservation.id})">Remove</button>
-                        </td>
+                    <tr>
+                        <td colspan="14">No reservations found.</td>
                     </tr>`;
-            });
-
+            }
             tableHtml += `
-                    </tbody>
-                </table>
-                <button class="Abtn add-button" onclick="openAddForm()">Add Reservation</button>`; // Removed cottage_no for Add List
+                        </tbody>
+                    </table>
+                    <button class="Abtn add-button" onclick="openReservationForm()">Add Reservation</button>`; // Removed cottage_no for Add List
 
-            document.getElementById('cottage-list').innerHTML = tableHtml;
+                document.getElementById('cottage-list').innerHTML = tableHtml;
         })
         .catch(error => console.error("Error fetching reservations:", error));
 }

@@ -127,14 +127,14 @@
             <a href="AdminReservationTentList.php" class="cta-button">Tent</a>
             <a href="AdminReservationEventList.php" class="cta-button">Event</a>
             <div class="cottage-selection">
-                <label for="cottage-select">Select Cottage No.:</label>
+                <label for="cottage-select">Select Room No.:</label>
                 <div>
                 <select id="cottage-select" class="select">
                     <option value="">All Rooms</option>
-                    <option value="1">Room 1</option>
-                    <option value="2">Room 2</option>
-                    <option value="3">Room 3</option>
-                    <option value="4">Room 4</option>
+                    <option value="Room 1">Room 1</option>
+                    <option value="Room 2">Room 2</option>
+                    <option value="Room 3">Room 3</option>
+                    <option value="Room 4">Room 4</option>
                 </select>
                 </div>
             </div>
@@ -186,13 +186,13 @@
                     <label for="guests">Number of Guests:</label>
                     <input type="number" id="guests" name="guests" required>
 
-                    <label for="selectroom">Select Cottage:</label>
+                    <label for="selectroom">Select Room:</label>
                     <select id="selectroom" name="selectroom" required>
-                        <option value="">Select a cottage</option>
-                        <option value="1">Room 1</option>
-                        <option value="2">Room 2</option>
-                        <option value="3">Room 3</option>
-                        <option value="4">Room 4</option>
+                        <option value="">Select a Room</option>
+                        <option value="Room 1">Room 1</option>
+                        <option value="Room 2">Room 2</option>
+                        <option value="Room 3">Room 3</option>
+                        <option value="Room 4">Room 4</option>
                     </select>
                     
                     <label for="reference">Reference:</label>
@@ -236,12 +236,12 @@
                     <label for="editCheckout">Check-out:</label>
                     <input type="time" id="editCheckout">
 
-                    <label for="editSelectCottage">Select Cottage:</label>
+                    <label for="editSelectCottage">Select Room:</label>
                     <select id="editSelectCottage">
-                        <option value="1">Room 1</option>
-                        <option value="2">Room 2</option>
-                        <option value="3">Room 3</option>
-                        <option value="4">Room 4</option>
+                        <option value="Room 1">Room 1</option>
+                        <option value="Room 2">Room 2</option>
+                        <option value="Room 3">Room 3</option>
+                        <option value="Room 4">Room 4</option>
                     </select>
 
                     <label for="editGuests">Number of Guests:</label>

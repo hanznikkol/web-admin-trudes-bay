@@ -25,15 +25,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Fetch all reservations from the database
-    $sql = "SELECT * FROM eventres"; // Fetching all records
-    $result = $conn->query($sql);
-    $eventres = []; // Changed variable name for clarity
+    $reservationType = 'Event Hall';
 
-    while ($row = $result->fetch_assoc()) {
-        $eventres[] = $row;
+    // If no cottage is selected, fetch all reservations
+    $stmt = $conn->prepare("SELECT *, GROUP_CONCAT(CASE WHEN rt.reservationType = 'Tent' THEN CONCAT(rt.value, ' Tents') ELSE rt.value END SEPARATOR ', ') AS concatenated_values FROM reservations r INNER JOIN reservation_types rt ON rt.reservationID = r.id GROUP BY r.id;");
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+    // Check if the query was successful
+    if (!$result) {
+        echo json_encode(["error" => "Query failed: " . $conn->error]);
+        exit;
     }
-    echo json_encode($eventres);
+
+    // Check if any records were found
+    if ($result->num_rows > 0) {
+        $eventres = [];
+
+        while ($row = $result->fetch_assoc()) {
+            // Check if 'Cottage 1' exists in the concatenated_values column
+            if (strpos($row['concatenated_values'], $reservationType) !== false) {
+                $eventres[] = $row;
+            }
+        }
+
+
+        // Output the result as JSON
+        echo json_encode($eventres);
+    } else {
+        echo json_encode(["error" => "No reservations found"]);
+    }
 }
 
 // Handle Edit Reservation

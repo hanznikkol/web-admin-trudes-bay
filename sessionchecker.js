@@ -18,3 +18,21 @@ function logout() {
     sessionStorage.clear()
     window.location.href = "login.php"
 }
+
+function openReservationForm() {
+    // Get the current location
+    const currentLocation = window.location;
+
+    // Extract the hostname (e.g., 'localhost')
+    const hostname = currentLocation.hostname;
+
+    // Define the rest of the URL you want to append
+    const newPath = '/customer-trudes-bay/reservation.php';
+
+    // Combine the hostname with the new path
+    const newUrl = `${currentLocation.protocol}//${hostname}${newPath}`;
+
+    // open new window
+    window.open(newUrl, '_blank');
+
+}
