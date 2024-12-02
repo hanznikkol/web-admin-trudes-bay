@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $reservationType = 'Event Hall';
 
     // If no cottage is selected, fetch all reservations
-    $stmt = $conn->prepare("SELECT *, GROUP_CONCAT(CASE WHEN rt.reservationType = 'Tent' THEN CONCAT(rt.value, ' Tents') ELSE rt.value END SEPARATOR ', ') AS concatenated_values FROM reservations r INNER JOIN reservation_types rt ON rt.reservationID = r.id GROUP BY r.id;");
+    $stmt = $conn->prepare("SELECT *, GROUP_CONCAT(CASE WHEN rt.reservationType = 'Tent' THEN CONCAT(rt.value, ' Tents') ELSE rt.value END SEPARATOR ', ') AS concatenated_values FROM reservations r INNER JOIN reservation_types rt ON rt.reservationID = r.id WHERE status = 'Pending' GROUP BY r.id;");
     $stmt->execute();
     $result = $stmt->get_result();
  
@@ -87,10 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $input = json_decode(file_get_contents('php://input'), true);
     $id = $input['id'];
 
-    $sql = "DELETE FROM eventres WHERE id='$id'";
+    $sql = "UPDATE reservations SET status = 'Completed' WHERE id='$id'";
 
     if ($conn->query($sql) === TRUE) {
-        echo json_encode(["success" => true, "message" => "Reservation removed successfully"]);
+        echo json_encode(["success" => true, "message" => "Reservation is now completed"]);
     } else {
         echo json_encode(["success" => false, "message" => "Error: " . $conn->error]);
     }

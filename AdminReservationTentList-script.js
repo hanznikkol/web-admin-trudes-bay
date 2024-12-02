@@ -81,7 +81,7 @@ function fetchReservations(tentquantity) {
                             <td>${reservation.reference || 'N/A'}</td>
                             <td>
                             
-                                <button class="remove-button" onclick="removeReservation(${reservation.id}, ${tentquantity})">Remove</button>
+                                <button class="remove-button" onclick="removeReservation(${reservation.id})">Complete</button>
                             </td>
                         </tr>`;
                 });
@@ -221,4 +221,24 @@ function convertTo24Hour(time) {
         hour = 0;
     }
     return `${hour}:${minute}`;
+}
+
+// Handle remove reservation
+function removeReservation(reservationId) {
+    if (confirm("Are you sure you want to complete this reservation?")) {
+        fetch('AdminTentfunction.php', {
+            method: 'DELETE',
+            body: JSON.stringify({ id: reservationId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                fetchReservations(''); // Refresh the reservations table
+            } else {
+                alert("Error completing reservation: " + data.message);
+            }
+        })
+        .catch(error => console.error("Error completing reservation:", error));
+    }    
 }

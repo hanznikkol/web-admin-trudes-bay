@@ -121,7 +121,10 @@
         </div>
 
         <div class="tabular--wrapper">
-            <h3>Room</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center;" class="title-wrapper">
+                <h3>Room</h3>
+                <a href="AdminReservationHistory.php" class="cta-button-history">History</a>
+            </div>
             <a href="AdminReservationList.php" class="cta-button">Cottage</a>
             <a href="AdminReservationRoomList.php" class="cta-button">Room</a>
             <a href="AdminReservationTentList.php" class="cta-button">Tent</a>

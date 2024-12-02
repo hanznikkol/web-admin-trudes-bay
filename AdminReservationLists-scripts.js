@@ -92,7 +92,7 @@ function fetchReservations(selectcottage) {
                         <td>${reservation.guests || 'N/A'}</td>
                         <td>${reservation.reference || 'N/A'}</td>
                         <td>
-                            <button class="remove-button" onclick="removeReservation(${reservation.id}, ${selectcottage})">Remove</button>
+                            <button class="remove-button" onclick="removeReservation(${reservation.id}, ${selectcottage})">Complete</button>
                         </td>
                     </tr>`;
             });
@@ -325,7 +325,7 @@ function updateReservationRow(reservationId, lastname, firstname, middlename, co
 
 // Handle remove reservation
 function removeReservation(reservationId, cottage_no) {
-    if (confirm("Are you sure you want to remove this reservation?")) {
+    if (confirm("Are you sure you want to complete this reservation?")) {
         fetch('AdminReserveCottage.php', {
             method: 'DELETE',
             body: JSON.stringify({ id: reservationId })
@@ -333,13 +333,13 @@ function removeReservation(reservationId, cottage_no) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Reservation removed successfully");
+                alert(data.message);
                 fetchReservations(cottage_no); // Refresh the reservations table
             } else {
-                alert("Error removing reservation: " + data.message);
+                alert("Error completing reservation: " + data.message);
             }
         })
-        .catch(error => console.error("Error removing reservation:", error));
+        .catch(error => console.error("Error completing reservation:", error));
     }    
 }
 

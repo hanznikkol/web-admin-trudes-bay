@@ -307,11 +307,11 @@ button.edit-button:hover {
 }
 
 button.remove-button {
-    background-color: #ef5350; /* Red */
+    background-color: #66bb6a; /* Red */
 }
 
 button.remove-button:hover {
-    background-color: #e53935; /* Darker Red */
+    background-color: #4caf50; /* Darker Red */
 }
 
 
@@ -418,6 +418,28 @@ input, textarea {
 }
 
 
+/* Base styles for the wrapper */
+.title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px; /* Add padding to avoid edge overflow */
+    max-width: 100%; /* Prevent content from extending beyond screen */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+/* Ensure the link and title are styled correctly */
+.cta-button-history {
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #66bb6a; /* Green */
+    color: white;
+    border-radius: 5px;
+}
+
+
+
 /* Hide the button on larger screens */
 .svg-hamburger {
     display: none;
@@ -486,4 +508,16 @@ input, textarea {
         overflow-x: auto;
         table-layout: fixed; /* Ensures each column aligns across rows */
     }
+
+    .title-wrapper {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align to the left */
+        gap: 8px; /* Add spacing between elements */
+    }
+
+    .cta-button-history {
+        width: 100%; /* Make the button full-width */
+        text-align: center;
+    }
+    
 }

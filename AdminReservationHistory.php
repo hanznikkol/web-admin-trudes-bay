@@ -34,7 +34,7 @@
         <a href="AdminFAQ.php"><i class='bx bx-help-circle'></i> <span class="nav-item">FAQ's</span></a>
         <a onclick="logout()"><i class="bx bxs-log-out"></i> <span class="nav-item">Logout</span></a>
     </nav>
-
+    
     <div class="sidebar">
         <div class="top">
             <div class="logo">
@@ -121,20 +121,39 @@
         </div>
 
         <div class="tabular--wrapper">
-        <div style="display: flex; justify-content: space-between; align-items: center;" class="title-wrapper">
-                <h3>Tent</h3>
-                <a href="AdminReservationHistory.php" class="cta-button-history">History</a>
+            <div style="display: flex; justify-content: space-between; align-items: center;" class="title-wrapper">
+                <h3>Reservation History</h3>
+                <a href="AdminReservationList.php" class="cta-button-history">Current Reservations</a>
             </div>
-            <a href="AdminReservationList.php" class="cta-button">Cottage</a>
-            <a href="AdminReservationRoomList.php" class="cta-button">Room</a>
-            <a href="AdminReservationTentList.php" class="cta-button">Tent</a>
-            <a href="AdminReservationEventList.php" class="cta-button">Event</a>
-            
-            <div class="table-container" id="cottage-list"> <!-- Container for dynamically loaded activities -->
-                <!-- This section will be populated with reservation data -->
+            <div style="display: flex; gap: 10px;" class="cottage-selection">
+                <div>
+                <label for="monthPicker">Select Month:</label>
+                <select id="monthPicker" class="select">
+                    <option value="1">January</option> <!-- Display all the cottage when selected  -->
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                </div>
+                
+                <div>
+                    <label for="yearPicker">Select Year:</label>
+                    <select id="yearPicker" class="select">
+                </div>
             </div>
-        </div>
 
+            <div class="table-container" id="cottage-list"> <!-- Container for dynamically loaded activities -->
+            </div>
+
+        </div>
 
                         <!-- Modal Form -->   
         <div id="addReservationModal" class="modal">
@@ -177,6 +196,17 @@
                     
                     <label for="guests">Number of Guests:</label>
                     <input type="number" id="guests" name="guests" required>
+
+                    <label for="selectcottage">Select Cottage:</label>
+                    <select id="selectcottage" name="selectcottage" required>
+                        <option value="">Select a cottage</option>
+                        <option value="Cottage 1">Cottage 1</option>
+                        <option value="Cottage 2">Cottage 2</option>
+                        <option value="Cottage 3">Cottage 3</option>
+                        <option value="Cottage 4">Cottage 4</option>
+                        <option value="Cottage 5">Cottage 5</option>
+                        <option value="Cottage 6">Cottage 6</option>
+                    </select>
                     
                     <label for="reference">Reference:</label>
                     <input type="number" id="reference" name="reference" required>
@@ -186,6 +216,8 @@
                 </form>
             </div>
         </div>
+
+    
 
                 <!-- Edit Reservation Modal -->
         <div id="editReservationModal" class="modal" style="display: none;">
@@ -217,6 +249,17 @@
                     <input type="time" id="editCheckin">
                     <label for="editCheckout">Check-out:</label>
                     <input type="time" id="editCheckout">
+
+                    <label for="editSelectCottage">Select Cottage:</label>
+                    <select id="editSelectCottage">
+                        <option value="Cottage 1">Cottage 1</option>
+                        <option value="Cottage 2">Cottage 2</option>
+                        <option value="Cottage 3">Cottage 3</option>
+                        <option value="Cottage 4">Cottage 4</option>
+                        <option value="Cottage 5">Cottage 5</option>
+                        <option value="Cottage 6">Cottage 6</option>
+                    </select>
+
                     <label for="editGuests">Number of Guests:</label>
                     <input type="number" id="editGuests">
                     <label for="editReference">Reference:</label>
@@ -227,9 +270,8 @@
         </div>
 
 
-             
     </div>
-    <script src="AdminReservationTentList-script.js?ver=<?php echo time();?>"></script>
+    <script src="AdminReservationHistory-script.js?ver=<?php echo time();?>"></script>
     <script src="sessionchecker.js?ver=<?php echo time();?>"></script>
     <footer>
         <p>&copy; Trudes Bay Beach Resort</p>

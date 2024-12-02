@@ -2,7 +2,7 @@
 var session = sessionStorage.getItem("admintrudes_session")
 var user = JSON.parse(session)
 if(!session) {
-    window.location.href = 'login.php'
+    window.location.href = 'Login.php'
 }
 
 // manipulate the ui for respective user position
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function logout() {
     sessionStorage.clear()
-    window.location.href = "login.php"
+    window.location.href = "Login.php"
 }
 
 function openReservationForm() {
@@ -27,7 +27,7 @@ function openReservationForm() {
     const hostname = currentLocation.hostname;
 
     // Define the rest of the URL you want to append
-    const newPath = '/customer-trudes-bay/reservation.php';
+    const newPath = '/reservation.php';
 
     // Combine the hostname with the new path
     const newUrl = `${currentLocation.protocol}//${hostname}${newPath}`;

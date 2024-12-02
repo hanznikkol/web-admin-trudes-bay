@@ -73,7 +73,7 @@ function fetchAllReservations() {
                             <td>${reservation.reference || 'N/A'}</td>
                             <td>
                             
-                                <button class="remove-button" onclick="removeReservation(${reservation.id}, ${tentquantity})">Remove</button>
+                                <button class="remove-button" onclick="removeReservation(${reservation.id}, ${tentquantity})">Complete</button>
                             </td>
                         </tr>`;
                 });
@@ -280,7 +280,7 @@ document.getElementById('editReservationForm').addEventListener('submit', functi
 
 // Function to remove a reservation
 function removeReservation(reservationId) {
-    if (confirm("Are you sure you want to remove this reservation?")) {
+    if (confirm("Are you sure you want to complete this reservation?")) {
         fetch('AdminEventfunction.php', {
             method: 'DELETE',
             headers: {
@@ -291,12 +291,12 @@ function removeReservation(reservationId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Reservation removed successfully");
+                alert(data.message);
                 fetchAllReservations(); // Refresh the reservations table
             } else {
-                alert("Error removing reservation: " + data.message);
+                alert("Error completing reservation: " + data.message);
             }
         })
-        .catch(error => console.error("Error removing reservation:", error));
+        .catch(error => console.error("Error completing reservation:", error));
     }
 }
